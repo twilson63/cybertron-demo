@@ -15,24 +15,45 @@ export default function() {
   const ex1 =
     'Use map to transform list of rockstar first,last name objects to objects with fullname'
   const exercise1 = _ => {
-    return null
+    function toFullname(rockstar) {
+      return { fullname: fullname(rockstar) }
+    }
+    return map(toFullname, stars)
   }
 
   const ex2 = 'Use filter to filter list of rockstars that are still alive'
   const exercise2 = _ => {
-    return null
+    function isAlive(rockstar) {
+      return rockstar.alive
+    }
+    return filter(isAlive, stars)
   }
 
   const ex3 =
     'Use reduce and count the number of stars that are no longer living'
   const exercise3 = _ => {
-    return null
+    function countTheDead(count, rockstar) {
+      if (rockstar.alive === false) {
+        return count + 1
+      }
+      return count
+    }
+    return reduce(countTheDead, 0, stars)
   }
 
   const ex4 =
     'Use map, filter and reduce with compose show a concatenated string of the fullnames of each alive star'
   const exercise4 = _ => {
-    return null
+    function createFullname(rockstar) {
+      return { fullname: fullname(rockstar), ...rockstar }
+    }
+    const fullnames = map(createFullname)
+    const isAlive = filter(prop('alive'))
+    function concatFullnames(acc, rockstar) {
+      return acc + rockstar.fullname
+    }
+    const aliveStars = reduce(concatFullnames, '')
+    return compose(aliveStars, isAlive, fullnames)(stars) 
   }
 
   /* tests to validate exercises go here */
